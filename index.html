@@ -154,7 +154,7 @@
       </div>
     </section>
 
-    <!-- Оставить отзыв -->
+    <!-- Оставить отзыв → теперь в WhatsApp -->
     <section class="section" id="review">
       <h2>Оставить отзыв</h2>
       <form class="review reveal" id="reviewForm">
@@ -168,36 +168,14 @@
             <input id="phone" name="phone" type="tel" placeholder="+996 ___ __ __ __">
           </div>
         </div>
-        <div class="row">
-          <div>
-            <label for="branch">Филиал</label>
-            <select id="branch" name="branch" required>
-              <option value="Кант">Кант</option>
-              <option value="Кара-Балта">Кара-Балта</option>
-              <option value="Беловодск">Беловодск</option>
-              <option value="Сокулук">Сокулук</option>
-            </select>
-          </div>
-          <div>
-            <label for="rating">Оценка</label>
-            <select id="rating" name="rating">
-              <option value="5">5 — отлично</option>
-              <option value="4">4 — хорошо</option>
-              <option value="3">3 — нормально</option>
-              <option value="2">2 — плохо</option>
-              <option value="1">1 — ужасно</option>
-            </select>
-          </div>
-        </div>
         <div>
           <label for="message">Комментарий</label>
           <textarea id="message" name="message" placeholder="Что понравилось? Что улучшить?" required></textarea>
         </div>
         <div class="form-actions">
-          <button type="submit" class="btn primary">Отправить на e‑mail</button>
-          <a id="mailtoFallback" class="btn outline" href="mailto:refocus.kg@gmail.com?subject=Отзыв%20Refocus&body=Имя:%20%0AТелефон:%20%0AФилиал:%20%0AОценка:%20%0AКомментарий:%20" >Если не сработало</a>
+          <button type="submit" class="btn primary">Отправить в WhatsApp</button>
         </div>
-        <div class="note">Кнопка откроет ваше почтовое приложение с готовым письмом на <strong>refocus.kg@gmail.com</strong>. Проверьте поля и нажмите «Отправить».</div>
+        <div class="note">Ваш отзыв уйдёт на WhatsApp номер <strong>+996 555 244 966</strong>.</div>
       </form>
     </section>
 
@@ -242,7 +220,6 @@
         <div>
           <strong>График работы (общее)</strong>
           <div class="small">Пн‑Сб: 10:00 — 19:00</div>
-          <div class="small">Вс: 11:00 — 17:00</div>
           <div class="small">Без записи, диагностика бесплатная</div>
         </div>
       </div>
@@ -250,7 +227,7 @@
   </div>
 
   <script>
-    // Mailto из формы «Отзыв»
+    // Отзыв: собираем текст и открываем WhatsApp на личный номер
     (function(){
       var form = document.getElementById('reviewForm');
       if(!form) return;
@@ -258,21 +235,17 @@
         e.preventDefault();
         var name = document.getElementById('name').value.trim();
         var phone = document.getElementById('phone').value.trim();
-        var branch = document.getElementById('branch').value;
-        var rating = document.getElementById('rating').value;
         var message = document.getElementById('message').value.trim();
-        var subject = 'Отзыв Refocus — ' + branch + ' — ' + (rating ? ('оценка ' + rating + '/5') : 'без оценки');
-        var body = [
-          'Имя: ' + name,
-          (phone ? 'Телефон: ' + phone : null),
-          'Филиал: ' + branch,
-          (rating ? 'Оценка: ' + rating + '/5' : null),
+        var text = [
+          'Здравствуйте! Хочу оставить отзыв.',
+          name ? ('Имя: ' + name) : null,
+          phone ? ('Телефон: ' + phone) : null,
           '',
           'Комментарий:',
           message
         ].filter(Boolean).join('\n');
-        var mailto = 'mailto:refocus.kg@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-        window.location.href = mailto;
+        var url = 'https://wa.me/996555244966?text=' + encodeURIComponent(text);
+        window.open(url, '_blank');
       });
     })();
 
